@@ -1,35 +1,79 @@
-<ion-header>
+<ion-header no-border>
+    <ion-navbar color="secondary">
+      <ion-buttons left>
+          <button ion-button icon-only color="light"><ion-icon name="arrow-back"></ion-icon></button>
+      </ion-buttons>
+    </ion-navbar>
+  </ion-header>
+   
+  <ion-content fullscreen>
+   
+    <ion-row>
+      <ion-col col-9>
+        <ion-item>
+          <ion-input [(ngModel)]="title" type="text" placeholder="Nouvelle astuce"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col col-9>
+          <ion-item>
+            <ion-input [(ngModel)]="text" type="text" placeholder="Texte"></ion-input>
+          </ion-item>
+        </ion-col>
+      <ion-col>
+        <button ion-button (click)="addItem()">Add!</button>
+      </ion-col>
+    </ion-row>
 
-  <ion-navbar>
-    <ion-title>{{ 'LIST_MASTER_TITLE' | translate }}</ion-title>
-
-    <ion-buttons end>
-      <button ion-button icon-only (click)="addItem()">
-        <ion-icon name="add"></ion-icon>
-      </button>
-    </ion-buttons>
-  </ion-navbar>
-
-</ion-header>
-
-<ion-content>
-
-  <ion-list>
-    <ion-item-sliding *ngFor="let item of currentItems">
-      <button ion-item (click)="openItem(item)">
-        <ion-avatar item-start>
-          <img [src]="item.profilePic" />
-        </ion-avatar>
-        <h2>{{item.name}}</h2>
-        <p>{{item.about}}</p>
-        <ion-note item-end *ngIf="item.note">{{item.note}}</ion-note>
-      </button>
-
-      <ion-item-options>
-        <button ion-button color="danger" (click)="deleteItem(item)">
-          {{ 'DELETE_BUTTON' | translate }}
-        </button>
-      </ion-item-options>
-    </ion-item-sliding>
-  </ion-list>
-</ion-content>
+      <ion-segment [(ngModel)]="category">
+          <ion-segment-button value="gear">
+              Gear
+          </ion-segment-button>
+          <ion-segment-button value="clothing">
+              Clothing
+          </ion-segment-button>
+          <ion-segment-button value="nutrition">
+              Nutrition
+          </ion-segment-button>
+      </ion-segment>
+   
+      <ion-card *ngFor="let item of tipsItems | async">
+   
+        <ion-item>
+            <h3 item-right>Author</h3>
+          <ion-avatar item-right>
+            <img src="https://api.adorable.io/avatars/285/abott@adorable.png"/>
+          </ion-avatar>
+          <h1>{{ item.title }}</h1> 
+          <h4>{{ item.add_date | date }}</h4>
+        </ion-item>
+   
+        <!-- <img src="http://placehold.it/500x200" /> -->
+   
+        <ion-card-content>
+          {{ item.text }}
+        </ion-card-content>
+   
+        <ion-row>
+          <ion-col>
+            <button ion-button icon-left clear small>
+              <ion-icon name="thumbs-up"></ion-icon>
+              <div>{{ item.likes }} Likes</div>
+            </button>
+          </ion-col>
+          <ion-col>
+            <button ion-button icon-left clear small>
+              <ion-icon name="text"></ion-icon>
+              <div>{{ item.comments }} Comments</div>
+            </button>
+          </ion-col>
+          <ion-col center text-center>
+            <ion-note>
+              <p>11h ago</p>
+            </ion-note>
+          </ion-col>
+         
+        </ion-row>
+   
+      </ion-card>
+   
+  </ion-content>
