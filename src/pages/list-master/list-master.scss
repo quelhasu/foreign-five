@@ -1,6 +1,37 @@
 .ios, .md {
+    
+    h1{
+        font-size: 4.5vw !important;
+    }
+
+    .inline {
+        display: inline-block;
+    }
+
+    .datelieu{
+        font-size: 3vw;
+        color: #BEBEBE;
+    }
+
+    .date{
+        margin-right: 2vw;
+    }
+
+    #datexlieu{
+        color: #BEBEBE;
+        font-size: 3vw;
+    }
+
+    .card-md{
+        width: 100%;
+        margin: 0;
+    }
  
     list-master {
+
+        h1{
+            font-size: 4.5vw !important;
+        }
  
         .header-image {
             background-image: url(https://ununsplash.imgix.net/photo-1421091242698-34f6ad7fc088?fit=crop&fm=jpg&h=650&q=75&w=950);

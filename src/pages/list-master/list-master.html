@@ -1,58 +1,90 @@
 <ion-header no-border>
-    <ion-navbar color="secondary">
-      <ion-buttons left>
-          <button ion-button icon-only color="light"><ion-icon name="arrow-back"></ion-icon></button>
-      </ion-buttons>
-    </ion-navbar>
-  </ion-header>
-   
-  <ion-content fullscreen>
-   
-    <ion-row>
-      <ion-col col-9>
-        <ion-item>
-          <ion-input [(ngModel)]="title" type="text" placeholder="Nouvelle astuce"></ion-input>
-        </ion-item>
-      </ion-col>
-      <ion-col col-9>
-          <ion-item>
-            <ion-input [(ngModel)]="text" type="text" placeholder="Texte"></ion-input>
-          </ion-item>
-        </ion-col>
-      <ion-col>
-        <button ion-button (click)="addItem()">Add!</button>
-      </ion-col>
-    </ion-row>
+  <ion-navbar color="secondary">
+    <ion-buttons left>
+      <button ion-button icon-only color="light">
+        <ion-icon name="arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
 
-      <ion-segment [(ngModel)]="category">
-          <ion-segment-button value="gear">
-              Gear
-          </ion-segment-button>
-          <ion-segment-button value="clothing">
-              Clothing
-          </ion-segment-button>
-          <ion-segment-button value="nutrition">
-              Nutrition
-          </ion-segment-button>
-      </ion-segment>
-   
-      <ion-card *ngFor="let item of tipsItems | async">
-   
+<ion-content fullscreen>
+
+  <ion-row>
+    <ion-col col-9>
+      <ion-item>
+        <ion-input [(ngModel)]="title" type="text" placeholder="Nouvelle astuce"></ion-input>
+      </ion-item>
+    </ion-col>
+    <ion-col col-9>
+      <ion-item>
+        <ion-input [(ngModel)]="text" type="text" placeholder="Texte"></ion-input>
+      </ion-item>
+    </ion-col>
+    <ion-col col-9>
         <ion-item>
-            <h3 item-right>Author</h3>
+            <ion-label>Category</ion-label>
+            <ion-select [(ngModel)]="category_selected">
+              <ion-option value="Housing">Housing</ion-option>
+              <ion-option value="Social">Social</ion-option>
+              <ion-option value="Economics">Economics</ion-option>
+              <ion-option value="Other">Other</ion-option>
+            </ion-select>
+          </ion-item>
+    </ion-col>
+    <ion-col>
+      <button ion-button (click)="addItem()">Add!</button>
+    </ion-col>
+  </ion-row>
+
+  <ion-segment [(ngModel)]="category">
+    <ion-segment-button value="all">
+      All
+    </ion-segment-button>
+    <ion-segment-button value="Housing">
+      Housing
+    </ion-segment-button>
+    <ion-segment-button value="Social">
+      Social
+    </ion-segment-button>
+    <ion-segment-button value="Economics">
+      Economics
+    </ion-segment-button>
+    <ion-segment-button value="Other">
+      Other
+    </ion-segment-button>
+  </ion-segment>
+
+  <div [ngSwitch]="category">
+
+    <!-- CATEGORY ALL -->
+
+    <div *ngSwitchCase="'all'" ngSelected="selected">
+      <ion-card *ngFor="let item of (tipsItems | async)?.slice().reverse()">
+
+        <ion-item>
+          <h3 item-right>Author</h3>
           <ion-avatar item-right>
-            <img src="https://api.adorable.io/avatars/285/abott@adorable.png"/>
+            <img src="https://api.adorable.io/avatars/285/abott@adorable.png" />
           </ion-avatar>
-          <h1>{{ item.title }}</h1> 
-          <h4>{{ item.add_date | date }}</h4>
+          <h1>{{ item.title }}</h1>
+          <div id="datexlieu">
+            <div class="inline">
+                <h4 class="datelieu date">{{ item.add_date | date:'MMM d, y, h:mm' }}</h4>
+            </div>
+            <div class="inline">
+              <i class="fas fa-map-marker"></i>
+            </div>
+            <div class="inline">
+              <h4 class="datelieu">Paris, France</h4>
+            </div>
+          </div>
         </ion-item>
-   
-        <!-- <img src="http://placehold.it/500x200" /> -->
-   
+
         <ion-card-content>
           {{ item.text }}
         </ion-card-content>
-   
+
         <ion-row>
           <ion-col>
             <button ion-button icon-left clear small>
@@ -66,14 +98,59 @@
               <div>{{ item.comments }} Comments</div>
             </button>
           </ion-col>
-          <ion-col center text-center>
-            <ion-note>
-              <p>11h ago</p>
-            </ion-note>
-          </ion-col>
-         
         </ion-row>
-   
+
       </ion-card>
-   
-  </ion-content>
+    </div>
+
+    <!-- ALL OTHER CATEOGRY -->
+
+    <div>
+        <ion-card *ngFor="let item of (tipsItems | async)?.slice().reverse()">
+          <div *ngIf="item.category == this.category">
+          <ion-item>
+            <h3 item-right>Author</h3>
+            <ion-avatar item-right>
+              <img src="https://api.adorable.io/avatars/285/abott@adorable.png" />
+            </ion-avatar>
+            <h1>{{ item.title }}</h1>
+            <div id="datexlieu">
+              <div class="inline">
+                <h4 class="datelieu date">{{ item.add_date | date:'MMM d, y, h:mm' }}</h4>
+              </div>
+              <div class="inline">
+                <i class="fas fa-map-marker"></i>
+              </div>
+              <div class="inline">
+                <h4 class="datelieu">Paris, France</h4>
+              </div>
+            </div>
+          </ion-item>
+          
+          <ion-card-content>
+            {{ item.text }}
+          </ion-card-content>
+  
+          <ion-row>
+            <ion-col>
+              <button ion-button icon-left clear small>
+                <ion-icon name="thumbs-up"></ion-icon>
+                <div>{{ item.likes }} Likes</div>
+              </button>
+            </ion-col>
+            <ion-col>
+              <button ion-button icon-left clear small>
+                <ion-icon name="text"></ion-icon>
+                <div>{{ item.comments }} Comments</div>
+              </button>
+            </ion-col>
+          </ion-row>
+  
+          </div>
+        </ion-card>
+      </div>
+
+
+  </div>
+
+</ion-content>

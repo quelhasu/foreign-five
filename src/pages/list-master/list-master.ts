@@ -19,11 +19,13 @@ export class ListMasterPage {
   newItem = [];
   title = '';
   text = '';
+  category_selected = '';
 
   constructor(public navCtrl: NavController, public items: Items, public modalCtrl: ModalController, public firebaseProvider: FirebaseProvider) {
     this.currentItems = this.items.query();
     this.cards = new Array(10);
     this.tipsItems = this.firebaseProvider.getTipsItems();
+    this.category = 'all';
   }
 
   /**
@@ -45,12 +47,14 @@ export class ListMasterPage {
     // })
     // addModal.present();
     // console.log(this.title);
+    console.log(this.category_selected);
     this.newItem.push({
       title : this.title,
       text : this.text,
       add_date : Date.now(),
       likes : 0,
-      comments : 0
+      comments : 0,
+      category : this.category_selected
     });
     this.firebaseProvider.addItem(this.newItem);
     this.newItem = [];
