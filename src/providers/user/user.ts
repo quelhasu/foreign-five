@@ -26,6 +26,8 @@ import { Api } from '../api/api';
 @Injectable()
 export class User {
   _user: any;
+  email: string;
+  password: string;
 
   constructor(public api: Api) { }
 

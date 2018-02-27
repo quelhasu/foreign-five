@@ -18,6 +18,7 @@ import { MyApp } from './app.component';
 import { HttpModule } from '@angular/http';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireModule } from 'angularfire2';
+import { AngularFireAuthModule } from 'angularfire2/auth';
 import { FirebaseProvider } from './../providers/firebase/firebase';
 
 var firebaseConfig = {
@@ -59,6 +60,7 @@ export function provideSettings(storage: Storage) {
     HttpModule,
     AngularFireDatabaseModule,
     AngularFireModule.initializeApp(firebaseConfig),
+    AngularFireAuthModule,
     HttpClientModule,
     TranslateModule.forRoot({
       loader: {

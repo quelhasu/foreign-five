@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { IonicPage, NavController, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, ToastController, AlertController } from 'ionic-angular';
+import { AngularFireAuth } from 'angularfire2/auth';
 
 import { User } from '../../providers/providers';
 import { MainPage } from '../pages';
+import { ListMasterPage } from '../../pages/list-master/list-master';
 
 @IonicPage()
 @Component({
@@ -25,26 +27,55 @@ export class LoginPage {
   constructor(public navCtrl: NavController,
     public user: User,
     public toastCtrl: ToastController,
-    public translateService: TranslateService) {
+    public translateService: TranslateService,
+    public afAuth: AngularFireAuth,
+    private alertCtrl: AlertController) {
 
     this.translateService.get('LOGIN_ERROR').subscribe((value) => {
       this.loginErrorString = value;
     })
   }
 
+  alert(message: string){
+    this.alertCtrl.create({
+      title: 'Info!',
+      subTitle: message,
+      buttons: ['OK']
+    }).present();
+  }
+
+  toast(message: string){
+    this.toastCtrl.create({
+      message: message,
+      duration: 3000,
+      position: 'top'
+    }).present();
+  }
+
   // Attempt to login in through our User service
-  doLogin() {
-    this.user.login(this.account).subscribe((resp) => {
+  doLogin(user: User) {
+    console.log("test login: " + this.user.email + " " +this.user.password);
+    this.afAuth.auth.signInWithEmailAndPassword(this.user.email, this.user.password)
+    .then(data =>{
+      this.toast('Success! You\'re logged in');
       this.navCtrl.push(MainPage);
-    }, (err) => {
-      this.navCtrl.push(MainPage);
-      // Unable to log in
-      let toast = this.toastCtrl.create({
-        message: this.loginErrorString,
-        duration: 3000,
-        position: 'top'
-      });
-      toast.present();
+    })
+    .catch(error =>{
+      console.error(error);
+      this.toast(error.message);
     });
+
+    // this.user.login(this.account).subscribe((resp) => {
+    //   this.navCtrl.push(MainPage);
+    // }, (err) => {
+    //   this.navCtrl.push(MainPage);
+    //   // Unable to log in
+    //   let toast = this.toastCtrl.create({
+    //     message: this.loginErrorString,
+    //     duration: 3000,
+    //     position: 'top'
+    //   });
+    //   toast.present();
+    // });
   }
 }
