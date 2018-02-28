@@ -3,6 +3,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Camera } from '@ionic-native/camera';
 import { IonicPage, NavController, ViewController } from 'ionic-angular';
 
+import { FirebaseListObservable } from 'angularfire2/database';
+import { FirebaseProvider } from './../../providers/firebase/firebase';
+
+
 @IonicPage()
 @Component({
   selector: 'page-item-create',
@@ -12,16 +16,16 @@ export class ItemCreatePage {
   @ViewChild('fileInput') fileInput;
 
   isReadyToSave: boolean;
-
   item: any;
-
   form: FormGroup;
+  newItem = [];
 
-  constructor(public navCtrl: NavController, public viewCtrl: ViewController, formBuilder: FormBuilder, public camera: Camera) {
+  constructor(public navCtrl: NavController, public viewCtrl: ViewController, formBuilder: FormBuilder, public camera: Camera, public firebaseProvider: FirebaseProvider) {
     this.form = formBuilder.group({
       profilePic: [''],
-      name: ['', Validators.required],
-      about: ['']
+      title: ['', Validators.required],
+      text: ['', Validators.required],
+      category:['', Validators.required]
     });
 
     // Watch the form for changes, and
@@ -31,6 +35,22 @@ export class ItemCreatePage {
   }
 
   ionViewDidLoad() {
+
+  }
+
+  /**
+   * Prompt the user to add a new item. This shows our ItemCreatePage in a
+   * modal and then adds the new item to our data source if the user created one.
+   */
+  addItem() {
+    // let addModal = this.modalCtrl.create('ItemCreatePage');
+    // addModal.onDidDismiss(item => {
+    //   if (item) {
+    //     this.items.add(item);
+    //   }
+    // })
+    // addModal.present();
+    // console.log(this.title);
 
   }
 
@@ -78,6 +98,18 @@ export class ItemCreatePage {
    */
   done() {
     if (!this.form.valid) { return; }
+    else{
+      this.newItem.push({
+        title : this.form.controls['title'].value,
+        text : this.form.controls['text'].value,
+        add_date : Date.now(),
+        likes : 0,
+        comments : 0,
+        category : this.form.controls['category'].value,
+      });
+      this.firebaseProvider.addItem(this.newItem);
+      this.newItem = [];
+    }
     this.viewCtrl.dismiss(this.form.value);
   }
 }

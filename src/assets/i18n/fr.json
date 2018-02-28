@@ -11,6 +11,8 @@
 
   "MAP_TITLE": "Carte",
 
+  "WELCOME_INTRO":"Tout voyageur mérite sa plus belle expérience!",
+
   "TUTORIAL_SLIDE1_TITLE": "Bienvenue dans le kit de démarrage Ionic Super Starter",
   "TUTORIAL_SLIDE1_DESCRIPTION": "<b>Ionic Super Starter</b> est un kit complet pour démarrer sur Ionic. Il repose sur les meilleures pratiques et implémente de nombreux types de pages.",
 
@@ -41,6 +43,9 @@
 
   "ITEM_CREATE_TITLE": "Nouvel item",
   "ITEM_CREATE_CHOOSE_IMAGE": "Ajouter une image",
+  "ITEM_TITLE_PLACEHOLDER": "Titre de l'astuce",
+  "ITEM_TEXT_PLACEHOLDER": "Texte descriptif",
+  "ITEM_CATEGORY_PLACEHOLDER": "Categorie",
 
   "CARDS_TITLE": "Social",
 

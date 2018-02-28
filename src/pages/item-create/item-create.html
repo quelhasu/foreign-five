@@ -23,8 +23,8 @@
 </ion-header>
 
 
-<ion-content>
-  <form *ngIf="form" [formGroup]="form" (ngSubmit)="createItem()">
+<ion-content scroll="false">
+  <form *ngIf="form" [formGroup]="form">
     <input type="file" #fileInput style="visibility: hidden; height: 0px" name="files[]" (change)="processWebImage($event)" />
     <div class="profile-image-wrapper" (click)="getPicture()">
       <div class="profile-image-placeholder" *ngIf="!this.form.controls.profilePic.value">
@@ -37,10 +37,18 @@
     </div>
     <ion-list>
       <ion-item>
-        <ion-input type="text" placeholder="{{ 'ITEM_NAME_PLACEHOLDER' | translate }}" formControlName="name"></ion-input>
+        <ion-input type="text" placeholder="{{ 'ITEM_TITLE_PLACEHOLDER' | translate }}" formControlName="title"></ion-input>
       </ion-item>
       <ion-item>
-        <ion-input type="text" placeholder="{{ 'ITEM_ABOUT_PLACEHOLDER' | translate }}" formControlName="about"></ion-input>
+        <ion-input type="text" placeholder="{{ 'ITEM_TEXT_PLACEHOLDER' | translate }}" formControlName="text"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-select placeholder="{{ 'ITEM_CATEGORY_PLACEHOLDER' | translate }}" formControlName="category">
+          <ion-option value="Housing">Housing</ion-option>
+          <ion-option value="Social">Social</ion-option>
+          <ion-option value="Economics">Economics</ion-option>
+          <ion-option value="Other">Other</ion-option>
+        </ion-select>
       </ion-item>
     </ion-list>
   </form>
