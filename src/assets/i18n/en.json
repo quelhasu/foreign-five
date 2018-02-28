@@ -1,7 +1,8 @@
 {
   "BACK_BUTTON_TEXT": "Back",
 
-  "NAME": "Name",
+  "LAST_NAME": "Last name",
+  "FIRST_NAME": "First name",
   "EMAIL": "Email",
   "USERNAME": "Username",
   "PASSWORD": "Password",
@@ -67,5 +68,7 @@
   "CARDS_TITLE": "Social",
 
   "SEARCH_TITLE": "Search",
-  "SEARCH_PLACEHOLDER": "Search the items list, e.g. \"Donald Duck\""
+  "SEARCH_PLACEHOLDER": "Search the items list, e.g. \"Donald Duck\"",
+
+  "SIGNUP_MESSAGE": "You don't have an account yet ? Register now !" 
 }

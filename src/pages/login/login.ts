@@ -47,7 +47,7 @@ export class LoginPage {
   toast(message: string){
     this.toastCtrl.create({
       message: message,
-      duration: 1500,
+      duration: 4000,
       position: 'top'
     }).present();
   }
@@ -56,8 +56,8 @@ export class LoginPage {
   doLogin(user: User) {
     this.afAuth.auth.signInWithEmailAndPassword(this.user.email, this.user.password)
     .then(data =>{
-      this.toast('Success! You\'re logged in');
-      this.navCtrl.push(MainPage);
+      // this.toast('Success! You\'re logged in');
+      this.navCtrl.setRoot(MainPage);
     })
     .catch(error =>{
       console.error(error);
@@ -78,8 +78,12 @@ export class LoginPage {
     // });
   }
 
-  devMode(){
-    this.toast('Connexion pour dev!');
-    this.navCtrl.push(MainPage);
+  // devMode(){
+  //   this.toast('Connexion pour dev!');
+  //   this.navCtrl.push(MainPage);
+  // }
+
+  goSignUp(){
+    this.navCtrl.push('SignupPage');
   }
 }

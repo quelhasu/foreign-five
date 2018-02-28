@@ -1,5 +1,6 @@
 {
-  "NAME": "Nom",
+  "LAST_NAME": "Nom",
+  "FIRST_NAME": "Prenom",
   "PASSWORD": "Mot de passe",
   "EMAIL": "E-mail",
   "LOGIN": "Connexion",
@@ -49,5 +50,8 @@
 
   "CARDS_TITLE": "Social",
 
-  "SEARCH_TITLE": "Recherche"
+  "SEARCH_TITLE": "Recherche",
+
+  "SIGNUP_MESSAGE": "Tu n'as pas encore de compte ? Inscris-toi !" 
+
 }

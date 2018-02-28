@@ -33,9 +33,13 @@
       <div padding>
         <button ion-button color="primary" (click)="doLogin(user)" block>{{ 'LOGIN_BUTTON' | translate }}</button>
       </div>
-      <div padding>
-        <button ion-button color="secondary" (click)="devMode()">co direct mon con</button>
+      <div padding class="bottom">
+        <p text-center>{{ 'SIGNUP_MESSAGE' | translate }}</p>
+        <button ion-button color="primary" (click)="goSignUp()" block class="signup">{{ 'SIGNUP_BUTTON' | translate }}</button>
       </div>
+      <!-- <div padding>
+        <button ion-button color="secondary" (click)="devMode()">co direct mon con</button>
+      </div> -->
 
     </ion-list>
   </form>
