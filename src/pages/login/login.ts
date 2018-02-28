@@ -47,14 +47,13 @@ export class LoginPage {
   toast(message: string){
     this.toastCtrl.create({
       message: message,
-      duration: 3000,
+      duration: 1500,
       position: 'top'
     }).present();
   }
 
   // Attempt to login in through our User service
   doLogin(user: User) {
-    console.log("test login: " + this.user.email + " " +this.user.password);
     this.afAuth.auth.signInWithEmailAndPassword(this.user.email, this.user.password)
     .then(data =>{
       this.toast('Success! You\'re logged in');
@@ -77,5 +76,10 @@ export class LoginPage {
     //   });
     //   toast.present();
     // });
+  }
+
+  devMode(){
+    this.toast('Connexion pour dev!');
+    this.navCtrl.push(MainPage);
   }
 }

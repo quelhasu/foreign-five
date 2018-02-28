@@ -21,6 +21,7 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { FirebaseProvider } from './../providers/firebase/firebase';
 
+
 var firebaseConfig = {
   apiKey: "AIzaSyCufgv_4v7oWsVBE6-MJwRtGM4aaTKb4Xk",
   authDomain: "foreign-five.firebaseapp.com",
