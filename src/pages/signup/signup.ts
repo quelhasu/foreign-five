@@ -3,12 +3,13 @@ import { TranslateService } from '@ngx-translate/core';
 import { IonicPage, NavController, ToastController } from 'ionic-angular';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Camera } from '@ionic-native/camera';
-import { AngularFireDatabase }  from 'angularfire2/database';
+import { Camera, CameraOptions } from '@ionic-native/camera';
+import { AngularFireDatabase } from 'angularfire2/database';
 
 
 import { User } from '../../providers/providers';
 import { MainPage } from '../pages';
+import { storage } from 'firebase/app';
 
 @IonicPage()
 @Component({
@@ -38,16 +39,22 @@ export class SignupPage {
     public user: User,
     public toastCtrl: ToastController,
     public translateService: TranslateService,
-    private afAuth: AngularFireAuth, 
+    private afAuth: AngularFireAuth,
     public afDatabse: AngularFireDatabase,
-    public camera: Camera) {
+    public camera: Camera,
+    public formBuilder: FormBuilder) {
+
+      this.form = formBuilder.group({
+        profilePic: ['']
+      });
 
     this.translateService.get('SIGNUP_ERROR').subscribe((value) => {
       this.signupErrorString = value;
     })
+    
   }
 
-  toast(message: string){
+  toast(message: string) {
     this.toastCtrl.create({
       message: message,
       duration: 3000,
@@ -55,8 +62,8 @@ export class SignupPage {
     }).present();
   }
 
-  createProfile(){
-    this.afAuth.authState.take(1).subscribe(auth =>{
+  createProfile() {
+    this.afAuth.authState.take(1).subscribe(auth => {
       this.afDatabse.object(`profile/${auth.uid}`).set(this.user)
         .then(() => this.navCtrl.setRoot(MainPage));
     })
@@ -65,15 +72,15 @@ export class SignupPage {
   doSignup(user: User) {
     // Attempt to login in through our User service
     this.afAuth.auth.createUserWithEmailAndPassword(this.user.email, this.user.password)
-    .then(data =>{
-      // this.toast('Success! You\'re signing up');
-      this.createProfile();
-      // this.navCtrl.push(MainPage);
-    })
-    .catch(error =>{
-      console.error(error);
-      this.toast(error.message);
-    });
+      .then(data => {
+        // this.toast('Success! You\'re signing up');
+        this.createProfile();
+        // this.navCtrl.push(MainPage);
+      })
+      .catch(error => {
+        console.error(error);
+        this.toast(error.message);
+      });
 
     // this.user.signup(this.account).subscribe((resp) => {
     //   this.navCtrl.push(MainPage);
@@ -94,11 +101,15 @@ export class SignupPage {
   getPicture() {
     if (Camera['installed']()) {
       this.camera.getPicture({
+        quality: 50,
+        targetHeight: 500,
+        targetWidth: 500,
         destinationType: this.camera.DestinationType.DATA_URL,
-        targetWidth: 96,
-        targetHeight: 96
+        encodingType: this.camera.EncodingType.JPEG,
+        mediaType: this.camera.MediaType.PICTURE
       }).then((data) => {
         this.form.patchValue({ 'profilePic': 'data:image/jpg;base64,' + data });
+        // storage().ref('pictures/profile').putString(`data:image/jpeg;base64,${data}`, 'data_url');
       }, (err) => {
         alert('Unable to take photo');
       })
@@ -120,5 +131,26 @@ export class SignupPage {
 
   getProfileImageStyle() {
     return 'url(' + this.form.controls['profilePic'].value + ')'
+  }
+
+  async takePhoto() {
+    try {
+      const options: CameraOptions = {
+        quality: 50,
+        targetHeight: 500,
+        targetWidth: 500,
+        destinationType: this.camera.DestinationType.DATA_URL,
+        encodingType: this.camera.EncodingType.JPEG,
+        mediaType: this.camera.MediaType.PICTURE
+      }
+
+      const result = await this.camera.getPicture(options);
+      const image = `data:image/jpeg;base64,${result}`;
+      const pictures = storage().ref('pictures/profile');
+      pictures.putString(image, 'data_url');
+    }
+    catch(e){
+      console.error(e);
+    }
   }
 }

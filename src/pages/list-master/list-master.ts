@@ -4,9 +4,10 @@ import { FirebaseListObservable, AngularFireDatabase, FirebaseObjectObservable }
 import { FirebaseProvider } from './../../providers/firebase/firebase';
 
 import { Item } from '../../models/item';
-import { Items } from '../../providers/providers';
+import { Items, User } from '../../providers/providers';
 import { AngularFireAuth } from 'angularfire2/auth';
-import { User } from 'firebase/app';
+// import { User } from 'firebase/app';
+import { Observable } from 'rxjs/Observable';
 
 @IonicPage()
 @Component({
@@ -14,20 +15,28 @@ import { User } from 'firebase/app';
   templateUrl: 'list-master.html'
 })
 export class ListMasterPage {
-  profileData: FirebaseObjectObservable<any>;
+  profileData: Observable<any>;
   currentItems: Item[];
   cards: any;
   category: string = 'gear';
   tipsItems: FirebaseListObservable<any[]>;
   category_selected = '';
+  user_key: any;
+  authors: any[] = [];
 
   constructor(public navCtrl: NavController, public items: Items, public modalCtrl: ModalController, 
     public firebaseProvider: FirebaseProvider, public afAuth: AngularFireAuth, public toastCtrl: ToastController,
     public afDatabse: AngularFireDatabase) {
+
     this.currentItems = this.items.query();
     this.cards = new Array(10);
     this.tipsItems = this.firebaseProvider.getTipsItems();
     this.category = 'all';
+    this.tipsItems.subscribe(snapshots => {
+      snapshots.forEach(snapshot => {
+        this.authors.push(this.afDatabse.object(`profile/${snapshot.author}`));
+      })
+    })
   }
 
   toast(message: string){
@@ -42,12 +51,14 @@ export class ListMasterPage {
    * The view loaded, let's query our items for the list
    */
   ionViewDidLoad() {
+    // var user = this.afAuth.auth.currentUser;
     this.afAuth.authState.take(1).subscribe(data =>{
       if(data && data.email && data.uid){
         this.profileData= this.afDatabse.object(`profile/${data.uid}`);
         this.profileData.subscribe(snapshot => {
           this.toast(`Success! You\'re logged in ${snapshot.firstname} ${snapshot.lastname} !`);
-        });
+          this.user_key = data.uid;
+        })
 
       }
       else{
@@ -73,12 +84,18 @@ export class ListMasterPage {
   }
 
   addItemBtn(){
-    this.navCtrl.push('ItemCreatePage');
+    this.navCtrl.push('ItemCreatePage', {
+      user_key: this.user_key
+    });
   }
 
 
   getDate(item){
     return Date.now();
+  }
+  
+  getAuthor(author){
+    console.log(author);
   }
 
 }

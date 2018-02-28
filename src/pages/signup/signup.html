@@ -9,9 +9,8 @@
 
 <ion-content>
   <form>
-    <ion-list>
-
-      <!-- <ion-item>
+      
+    <ion-item>
         <input type="file" #fileInput style="visibility: hidden; height: 0px" name="files[]" (change)="processWebImage($event)" />
         <div class="profile-image-wrapper" (click)="getPicture()">
           <div class="profile-image-placeholder" *ngIf="!this.form.controls.profilePic.value">
@@ -22,8 +21,9 @@
           </div>
           <div class="profile-image" [style.backgroundImage]="getProfileImageStyle()" *ngIf="this.form.controls.profilePic.value"></div>
         </div>
-      </ion-item> -->
+      </ion-item>
 
+    <ion-list>
       <ion-item>
         <ion-label fixed>{{ 'FIRST_NAME' | translate }}</ion-label>
         <ion-input type="text" [(ngModel)]="user.firstname" name="firstname"></ion-input>

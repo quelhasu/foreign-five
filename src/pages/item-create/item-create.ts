@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Camera } from '@ionic-native/camera';
-import { IonicPage, NavController, ViewController } from 'ionic-angular';
+import { IonicPage, NavController, ViewController, NavParams } from 'ionic-angular';
 
 import { FirebaseListObservable } from 'angularfire2/database';
 import { FirebaseProvider } from './../../providers/firebase/firebase';
@@ -16,11 +16,12 @@ export class ItemCreatePage {
   @ViewChild('fileInput') fileInput;
 
   isReadyToSave: boolean;
-  item: any;
+  dataUser: any;
+  uid: any;
   form: FormGroup;
   newItem = [];
 
-  constructor(public navCtrl: NavController, public viewCtrl: ViewController, formBuilder: FormBuilder, public camera: Camera, public firebaseProvider: FirebaseProvider) {
+  constructor(public navCtrl: NavController,public navParams: NavParams,  public viewCtrl: ViewController, formBuilder: FormBuilder, public camera: Camera, public firebaseProvider: FirebaseProvider) {
     this.form = formBuilder.group({
       profilePic: [''],
       title: ['', Validators.required],
@@ -32,6 +33,9 @@ export class ItemCreatePage {
     this.form.valueChanges.subscribe((v) => {
       this.isReadyToSave = this.form.valid;
     });
+
+    this.uid = navParams.get('user_key');
+    console.log("createur : " + this.uid);
   }
 
   ionViewDidLoad() {
@@ -106,6 +110,7 @@ export class ItemCreatePage {
         likes : 0,
         comments : 0,
         category : this.form.controls['category'].value,
+        author: this.uid
       });
       this.firebaseProvider.addItem(this.newItem);
       this.newItem = [];
