@@ -16,9 +16,6 @@ export class ListMasterPage {
   cards: any;
   category: string = 'gear';
   tipsItems: FirebaseListObservable<any[]>;
-  newItem = [];
-  title = '';
-  text = '';
   category_selected = '';
 
   constructor(public navCtrl: NavController, public items: Items, public modalCtrl: ModalController, public firebaseProvider: FirebaseProvider) {
@@ -34,31 +31,6 @@ export class ListMasterPage {
   ionViewDidLoad() {
   }
 
-  /**
-   * Prompt the user to add a new item. This shows our ItemCreatePage in a
-   * modal and then adds the new item to our data source if the user created one.
-   */
-  addItem() {
-    // let addModal = this.modalCtrl.create('ItemCreatePage');
-    // addModal.onDidDismiss(item => {
-    //   if (item) {
-    //     this.items.add(item);
-    //   }
-    // })
-    // addModal.present();
-    // console.log(this.title);
-    console.log(this.category_selected);
-    this.newItem.push({
-      title : this.title,
-      text : this.text,
-      add_date : Date.now(),
-      likes : 0,
-      comments : 0,
-      category : this.category_selected
-    });
-    this.firebaseProvider.addItem(this.newItem);
-    this.newItem = [];
-  }
 
   /**
    * Delete an item from the list of items.
@@ -76,7 +48,14 @@ export class ListMasterPage {
     });
   }
 
+  addItemBtn(){
+    console.log("Ajout d'un element");
+    this.navCtrl.push('ItemCreatePage');
+  }
+
+
   getDate(item){
     return Date.now();
   }
+
 }

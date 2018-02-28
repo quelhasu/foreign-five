@@ -1,41 +1,27 @@
 <ion-header no-border>
   <ion-navbar color="secondary">
-    <ion-buttons left>
-      <button ion-button icon-only color="light">
-        <ion-icon name="arrow-back"></ion-icon>
+    <ion-buttons start>
+      <button ion-button icon-only>
+        <ion-icon name="contact"></ion-icon>
       </button>
     </ion-buttons>
+    <ion-buttons end>
+      <button ion-button icon-only>
+        <ion-icon name="more"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>Foreign'Five</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content fullscreen>
 
-  <ion-row>
-    <ion-col col-9>
-      <ion-item>
-        <ion-input [(ngModel)]="title" type="text" placeholder="Nouvelle astuce"></ion-input>
-      </ion-item>
-    </ion-col>
-    <ion-col col-9>
-      <ion-item>
-        <ion-input [(ngModel)]="text" type="text" placeholder="Texte"></ion-input>
-      </ion-item>
-    </ion-col>
-    <ion-col col-9>
-        <ion-item>
-            <ion-label>Category</ion-label>
-            <ion-select [(ngModel)]="category_selected">
-              <ion-option value="Housing">Housing</ion-option>
-              <ion-option value="Social">Social</ion-option>
-              <ion-option value="Economics">Economics</ion-option>
-              <ion-option value="Other">Other</ion-option>
-            </ion-select>
-          </ion-item>
-    </ion-col>
-    <ion-col>
-      <button ion-button (click)="addItem()">Add!</button>
-    </ion-col>
-  </ion-row>
+  <div class="splash-bg">
+    <div id="lieu">
+      <h1 class="lieu"><i class="fas fa-university"></i> ESILV</h1>
+      <h1 class="lieu location"><i class="fas fa-location-arrow"></i> Paris, France</h1>
+    </div>
+  </div>
 
   <ion-segment [(ngModel)]="category">
     <ion-segment-button value="all">
@@ -60,7 +46,7 @@
     <!-- CATEGORY ALL -->
 
     <div *ngSwitchCase="'all'" ngSelected="selected">
-      <ion-card *ngFor="let item of (tipsItems | async)?.slice().reverse()">
+      <ion-card *ngFor="let item of (tipsItems | async)?.slice().reverse()" (click)="openItem(item)">
 
         <ion-item>
           <h3 item-right>Author</h3>
@@ -70,7 +56,7 @@
           <h1>{{ item.title }}</h1>
           <div id="datexlieu">
             <div class="inline">
-                <h4 class="datelieu date">{{ item.add_date | date:'MMM d, y, h:mm' }}</h4>
+              <h4 class="datelieu date">{{ item.add_date | date:'MMM d, y, h:mm' }}</h4>
             </div>
             <div class="inline">
               <i class="fas fa-map-marker"></i>
@@ -106,8 +92,8 @@
     <!-- ALL OTHER CATEOGRY -->
 
     <div>
-        <ion-card *ngFor="let item of (tipsItems | async)?.slice().reverse()">
-          <div *ngIf="item.category == this.category">
+      <ion-card *ngFor="let item of (tipsItems | async)?.slice().reverse()" (click)="openItem(item)">
+        <div *ngIf="item.category == this.category">
           <ion-item>
             <h3 item-right>Author</h3>
             <ion-avatar item-right>
@@ -126,11 +112,11 @@
               </div>
             </div>
           </ion-item>
-          
+
           <ion-card-content>
             {{ item.text }}
           </ion-card-content>
-  
+
           <ion-row>
             <ion-col>
               <button ion-button icon-left clear small>
@@ -145,12 +131,18 @@
               </button>
             </ion-col>
           </ion-row>
-  
-          </div>
-        </ion-card>
-      </div>
+
+        </div>
+      </ion-card>
+    </div>
 
 
   </div>
+
+  <ion-fab bottom right>
+    <button ion-button (click)="addItemBtn()">
+      <ion-icon name="add"></ion-icon>
+    </button>
+  </ion-fab>
 
 </ion-content>
