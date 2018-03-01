@@ -34,7 +34,7 @@ export class ListMasterPage {
     this.category = 'all';
     this.tipsItems.subscribe(snapshots => {
       snapshots.forEach(snapshot => {
-        this.authors.push(this.afDatabse.object(`profile/${snapshot.author}`));
+        this.authors.unshift(this.afDatabse.object(`profile/${snapshot.author}`));
       })
     })
   }
@@ -64,6 +64,15 @@ export class ListMasterPage {
       else{
         this.toast("Authentification problem!");
       }
+    })
+  }
+
+  ionViewWillEnter(){
+    this.authors = [];
+    this.tipsItems.subscribe(snapshots => {
+      snapshots.forEach(snapshot => {
+        this.authors.unshift(this.afDatabse.object(`profile/${snapshot.author}`));
+      })
     })
   }
 

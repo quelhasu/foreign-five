@@ -1,6 +1,6 @@
 {
   "name": "foreign-five",
-  "app_id": "",
+  "app_id": "3bed2143",
   "type": "ionic-angular",
   "integrations": {
     "cordova": {}

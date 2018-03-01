@@ -48,9 +48,11 @@
 
     <div *ngSwitchCase="'all'" ngSelected="selected">
       <ion-card *ngFor="let item of (tipsItems | async)?.slice().reverse(); let i = index" (click)="openItem(item)">
+          <!-- .reverse() -->
 
         <ion-item>
           <h3 item-right>{{ (authors[i] | async)?.username }}</h3>
+          <!-- (tipsItems | async)?.length -  -->
           <ion-avatar item-right>
             <img src="https://api.adorable.io/avatars/285/abott@adorable.png" />
           </ion-avatar>
