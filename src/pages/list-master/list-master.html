@@ -48,6 +48,7 @@
 
     <div *ngSwitchCase="'all'" ngSelected="selected">
       <ion-card *ngFor="let item of (tipsItems | async)?.slice().reverse(); let i = index" (click)="openItem(item)">
+          <!-- .reverse() -->
 
         <ion-item>
           <h3 item-right>{{ item.author.username }}</h3>
