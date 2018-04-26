@@ -1,4 +1,7 @@
 page-item-detail {
+  .body{
+    background: grey;
+  }
   .item-profile {
     width: 100%;
     background-position: center center;
@@ -10,5 +13,14 @@ page-item-detail {
     width: 100%;
     background: white;
     position: absolute;
+  }
+  
+  .date{
+    font-size: 1.3em;
+    color: lightgrey;
+  }
+
+  .title{
+    font-size: 3em;
   }
 }
