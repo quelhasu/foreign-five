@@ -1,3 +1,8 @@
+import { FirebaseListObservable, AngularFireDatabase, FirebaseObjectObservable } from 'angularfire2/database';
+import { FirebaseProvider } from './../providers/firebase/firebase';
+import { Observable } from 'rxjs/Observable';
+import { Injectable } from '@angular/core';
+
 /**
  * A generic model that our Master-Detail pages list, create, and delete.
  *
@@ -7,14 +12,14 @@
  * The Items service manages creating instances of Item, so go ahead and rename
  * that something that fits your app as well.
  */
+@Injectable()
 export class Item {
+  author : FirebaseObjectObservable<any> = new FirebaseObjectObservable;
+  item : FirebaseObjectObservable<any> = new FirebaseObjectObservable;
 
-  constructor(fields: any) {
-    // Quick and dirty extend/assign fields to this model
-    for (const f in fields) {
-      // @ts-ignore
-      this[f] = fields[f];
-    }
+  constructor(item: any, author: any) {
+    this.author = author;
+    this.item = item;
   }
 
 }

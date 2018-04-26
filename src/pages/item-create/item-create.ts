@@ -21,6 +21,13 @@ export class ItemCreatePage {
   form: FormGroup;
   newItem = [];
 
+  email: any;
+  username: any;
+  lastname: any;
+  firstname: any;
+  password: any;
+
+
   constructor(public navCtrl: NavController,public navParams: NavParams,  public viewCtrl: ViewController, formBuilder: FormBuilder, public camera: Camera, public firebaseProvider: FirebaseProvider) {
     this.form = formBuilder.group({
       profilePic: [''],
@@ -35,7 +42,12 @@ export class ItemCreatePage {
     });
 
     this.uid = navParams.get('user_key');
-    console.log("createur : " + this.uid);
+    this.dataUser = navParams.get('dataUser');
+    this.dataUser.subscribe(snapshot => {
+      this.handleUserData(snapshot);
+    });
+    console.log("createur : " + this.username);
+    console.log("uid : " + this.uid);
   }
 
   ionViewDidLoad() {
@@ -110,11 +122,26 @@ export class ItemCreatePage {
         likes : 0,
         comments : 0,
         category : this.form.controls['category'].value,
-        author: this.uid
+        author: {
+          username : this.username,
+          firstname: this.firstname,
+          lastname: this.lastname,
+          password: this.password,
+          email: this.email
+        }
       });
       this.firebaseProvider.addItem(this.newItem);
       this.newItem = [];
     }
     this.viewCtrl.dismiss(this.form.value);
+  }
+
+  handleUserData(snapshot) {
+    // console.log(snapshot.username);
+    this.firstname = snapshot.firstname;
+    this.lastname = snapshot.lastname;
+    this.email = snapshot.email;
+    this.password = snapshot.password;
+    this.username = snapshot.username;
   }
 }

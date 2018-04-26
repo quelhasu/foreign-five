@@ -13,7 +13,10 @@ export class FirebaseProvider {
  
   addItem(item) {
     this.afd.list('/tipsItems/').push(item[0]);
-    
+  }
+
+  getAuthor(id){
+    return this.afd.object('profile/'+id);
   }
  
   removeItem(id) {

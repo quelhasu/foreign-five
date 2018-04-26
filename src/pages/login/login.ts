@@ -54,6 +54,8 @@ export class LoginPage {
 
   // Attempt to login in through our User service
   doLogin(user: User) {
+    this.user.email = "ugo.quelhas@devinci.fr";
+    this.user.password = "lolxdlolxd";
     this.afAuth.auth.signInWithEmailAndPassword(this.user.email, this.user.password)
     .then(data =>{
       // this.toast('Success! You\'re logged in');

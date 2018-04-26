@@ -50,7 +50,7 @@
       <ion-card *ngFor="let item of (tipsItems | async)?.slice().reverse(); let i = index" (click)="openItem(item)">
 
         <ion-item>
-          <h3 item-right>{{ (authors[i] | async)?.username }}</h3>
+          <h3 item-right>{{ item.author.username }}</h3>
           <ion-avatar item-right>
             <img src="https://api.adorable.io/avatars/285/abott@adorable.png" />
           </ion-avatar>
@@ -96,7 +96,7 @@
       <ion-card *ngFor="let item of (tipsItems | async)?.slice().reverse()" (click)="openItem(item)">
         <div *ngIf="item.category == this.category">
           <ion-item>
-            <h3 item-right>Author</h3>
+            <h3 item-right>{{ item.author.username }}</h3>
             <ion-avatar item-right>
               <img src="https://api.adorable.io/avatars/285/abott@adorable.png" />
             </ion-avatar>
