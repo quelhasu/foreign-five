@@ -7,13 +7,9 @@ import { Camera, CameraOptions } from '@ionic-native/camera';
 import { AngularFireDatabase } from 'angularfire2/database';
 import firebase from 'firebase';
 
-
 import { User } from '../../providers/providers';
 import { MainPage } from '../pages';
 import { storage } from 'firebase/app';
-import { FileChooser } from '@ionic-native/file-chooser';
-import { File } from '@ionic-native/file';
-
 
 @IonicPage()
 @Component({
@@ -26,6 +22,7 @@ export class SignupPage {
   isReadyToSave: boolean;
   item: any;
   form: FormGroup;
+  image: any;
 
   // The account fields for the login form.
   // If you're using the username field with or without email, make
@@ -46,8 +43,7 @@ export class SignupPage {
     private afAuth: AngularFireAuth,
     public afDatabse: AngularFireDatabase,
     public camera: Camera,
-    public formBuilder: FormBuilder, 
-  public file: File, public fileChooser: FileChooser) {
+    public formBuilder: FormBuilder) {
 
       this.form = formBuilder.group({
         profilePic: ['']
@@ -68,68 +64,75 @@ export class SignupPage {
   }
 
   createProfile() {
-    this.afAuth.authState.take(1).subscribe(auth => {
+    this.afAuth.authState.take(1).subscribe(async auth => {
+      let storage = firebase.storage();
+      const pictures = storage.ref(`pictures/${auth.uid}`+".jpg");
+      await pictures.putString(this.image, 'data_url');
+      let pictureURL = pictures.getDownloadURL().toString();
+      
+      await pictures.getDownloadURL().then((result)=>{
+        this.user.changeProfilPic(result, pictures.fullPath);
+      })
+
       this.afDatabse.object(`profile/${auth.uid}`).set(this.user)
-        .then(() => this.navCtrl.setRoot(MainPage));
+        .then(() => {
+
+          let user = firebase.auth().currentUser;
+          user.updateProfile({
+            displayName: this.user.username,
+            photoURL: pictureURL
+          });
+
+          this.navCtrl.setRoot(MainPage)
+        });
     })
   }
 
   doSignup(user: User) {
-    // Attempt to login in through our User service
     this.afAuth.auth.createUserWithEmailAndPassword(this.user.email, this.user.password)
       .then(data => {
-        // this.toast('Success! You\'re signing up');
         this.createProfile();
-        // this.navCtrl.push(MainPage);
       })
       .catch(error => {
         console.error(error);
         this.toast(error.message);
       });
-
-    // this.user.signup(this.account).subscribe((resp) => {
-    //   this.navCtrl.push(MainPage);
-    // }, (err) => {
-
-    //   this.navCtrl.push(MainPage);
-
-    //   // Unable to sign up
-    //   let toast = this.toastCtrl.create({
-    //     message: this.signupErrorString,
-    //     duration: 3000,
-    //     position: 'top'
-    //   });
-    //   toast.present();
-    // });
-  }
-  getPicture(){
-    this.fileChooser.open().then((uri)=>{
-      alert(uri);
-      
-      this.file.resolveLocalFilesystemUrl(uri).then((newUrl)=>{
-        alert(JSON.stringify(newUrl));
-        
-        let dirPath = newUrl.nativeURL;
-        let dirPathSegment = dirPath.split('/');
-        dirPathSegment.pop();
-        dirPath = dirPathSegment.join('/');
-        this.file.readAsArrayBuffer(dirPath, newUrl.name).then(async (buffer)=>{
-          await this.upload(buffer, newUrl.name);
-          alert("File upload.");
-        })
-      })
-    })
   }
 
-  async upload(buffer, name){
-    let blob = new Blob([buffer], {type : "images/jpeg, images/png"});
+  processWebImage(event) {
+    let reader = new FileReader();
+    reader.onload = (readerEvent) => {
 
-    let storage = firebase.storage();
+      let imageData = (readerEvent.target as any).result;
+      this.form.patchValue({ 'profilePic': imageData });
+    };
 
-    storage.ref('images/'+name).put(blob).then((result)=>{
-      alert("Done");
-    }).catch((err)=>{
-      alert(JSON.stringify(err));
-    })
+    reader.readAsDataURL(event.target.files[0]);
+  }
+
+  getProfileImageStyle() {
+    return 'url(' + this.form.controls['profilePic'].value + ')'
+  }
+
+  async takePhoto() {
+    try {
+      const options: CameraOptions = {
+        quality: 50,
+        targetHeight: 500,
+        targetWidth: 500,
+        destinationType: this.camera.DestinationType.DATA_URL,
+        encodingType: this.camera.EncodingType.JPEG,
+        mediaType: this.camera.MediaType.PICTURE
+      }
+
+      const result = await this.camera.getPicture(options);
+      const image = `data:image/jpeg;base64,${result}`;
+      this.image = image;
+
+      await this.form.patchValue({ 'profilePic': 'data:image/jpg;base64,' + result });
+    }
+    catch(e){
+      console.error(e);
+    }
   }
 }

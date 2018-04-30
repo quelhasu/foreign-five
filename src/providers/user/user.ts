@@ -30,9 +30,16 @@ export class User {
   username: string;
   firstname: string;
   lastname: string;
+  url: string;
+  fullPath: string;
 
   constructor() { }
 
+
+  changeProfilPic(pic: string, path: string){
+    this.url = pic;
+    this.fullPath = path;
+  }
   /**
    * Send a POST request to our login endpoint with the data
    * the user entered on the form.

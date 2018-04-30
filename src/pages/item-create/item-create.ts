@@ -25,6 +25,7 @@ export class ItemCreatePage {
   username: any;
   lastname: any;
   firstname: any;
+  url: any;
 
 
   constructor(public navCtrl: NavController,public navParams: NavParams,  public viewCtrl: ViewController, formBuilder: FormBuilder, public camera: Camera, public firebaseProvider: FirebaseProvider) {
@@ -125,7 +126,8 @@ export class ItemCreatePage {
           username : this.username,
           firstname: this.firstname,
           lastname: this.lastname,
-          email: this.email
+          email: this.email,
+          url: this.url
         }
       });
       this.firebaseProvider.addItem(this.newItem);
@@ -140,5 +142,7 @@ export class ItemCreatePage {
     this.lastname = snapshot.lastname;
     this.email = snapshot.email;
     this.username = snapshot.username;
+    if(snapshot.url != null) this.url =  snapshot.url;
+    else this.url = 0;
   }
 }

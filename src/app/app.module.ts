@@ -22,6 +22,9 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { FirebaseProvider } from './../providers/firebase/firebase';
 import { FileChooser } from '@ionic-native/file-chooser';
 import { File } from '@ionic-native/file';
+import { Media } from '@ionic-native/media';
+import { AndroidPermissions } from '@ionic-native/android-permissions';
+
 
 
 var firebaseConfig = {
@@ -89,6 +92,9 @@ export function provideSettings(storage: Storage) {
     FirebaseProvider,
     File,
     FileChooser,
+    Media,
+    Camera,
+    AndroidPermissions,
     { provide: Settings, useFactory: provideSettings, deps: [Storage] },
     // Keep this to enable Ionic's runtime error handling during development
     { provide: ErrorHandler, useClass: IonicErrorHandler },
