@@ -23,5 +23,6 @@
 - **Louis Roulet** - *ESILV Student* - [LouisROULET92](https://github.com/LouisROULET92)
 - **Nicolas Rouvet** - *ESILV Student* - [nrouvet](https://github.com/nrouvet)
 - **Akilan Sundappan** - *ESILV Student* - [sundakilan](https://github.com/sundakilan)
+- **Ugo Quelhas** - *ESILV Student* - [quelhasu](https://github.com/quelhasu)
 
 <img src="src/assets/imgs/logo.png" align="right" width="100px" />
