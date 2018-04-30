@@ -81,11 +81,11 @@ export class ListMasterPage {
 
   ionViewWillEnter(){
     this.authors = [];
-    this.tipsItems.subscribe(snapshots => {
-      snapshots.forEach(snapshot => {
-        this.authors.unshift(this.afDatabse.object(`profile/${snapshot.author}`));
-      })
-    })
+    // this.tipsItems.subscribe(snapshots => {
+    //   snapshots.forEach(snapshot => {
+    //     this.authors.unshift(this.afDatabse.object(`profile/${snapshot.author}`));
+    //   })
+    // })
   }
 
   /**

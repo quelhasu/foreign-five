@@ -14,12 +14,8 @@ import { Injectable } from '@angular/core';
  */
 @Injectable()
 export class Item {
-  author : FirebaseObjectObservable<any> = new FirebaseObjectObservable;
-  item : FirebaseObjectObservable<any> = new FirebaseObjectObservable;
-
-  constructor(item: any, author: any) {
-    this.author = author;
-    this.item = item;
+  
+  constructor(item: any) {
   }
 
 }

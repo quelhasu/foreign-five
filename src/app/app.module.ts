@@ -20,6 +20,8 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { FirebaseProvider } from './../providers/firebase/firebase';
+import { FileChooser } from '@ionic-native/file-chooser';
+import { File } from '@ionic-native/file';
 
 
 var firebaseConfig = {
@@ -85,6 +87,8 @@ export function provideSettings(storage: Storage) {
     SplashScreen,
     StatusBar,
     FirebaseProvider,
+    File,
+    FileChooser,
     { provide: Settings, useFactory: provideSettings, deps: [Storage] },
     // Keep this to enable Ionic's runtime error handling during development
     { provide: ErrorHandler, useClass: IonicErrorHandler },
