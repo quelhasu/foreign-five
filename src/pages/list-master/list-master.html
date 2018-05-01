@@ -11,7 +11,7 @@
       </button>
     </ion-buttons>
     <!-- <ion-title>{{(profileData | async)?.username}}</ion-title> -->
-    <ion-title>Foreign'Five</ion-title>
+    <ion-title>Foreign Five</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -47,12 +47,12 @@
     <!-- CATEGORY ALL -->
 
     <div *ngSwitchCase="'all'" ngSelected="selected">
-      <ion-card *ngFor="let item of (tipsItems | async)?.slice().reverse(); let i = index" (click)="openItem(item)">
+      <ion-card *ngFor="let item of (tipsItems | async)?.slice().reverse(); let i = index">
           <!-- .reverse() -->
 
         <ion-item>
-          <h3 item-right>{{ item.author.username }}</h3>
-          <ion-avatar item-right>
+          <h3 item-right (click)="openUser(item)">{{ item.author.username }}</h3>
+          <ion-avatar item-right (click)="openUser(item)">
               <div *ngIf="item.author.url == 0;else avatar">
                   <img src="../../assets/imgs/logo.png">
               </div>
@@ -60,8 +60,8 @@
                   <img  src="{{ item.author.url }}" />
               </ng-template>
           </ion-avatar>
-          <h1>{{ item.title }}</h1>
-          <div id="datexlieu">
+          <h1 (click)="openItem(item)" >{{ item.title }}</h1>
+          <div id="datexlieu" (click)="openItem(item)">
             <div class="inline">
               <h4 class="datelieu date">{{ item.add_date | date:'MMM d, y, h:mm' }}</h4>
             </div>
@@ -74,7 +74,7 @@
           </div>
         </ion-item>
 
-        <ion-card-content>
+        <ion-card-content (click)="openItem(item)">
           {{ item.text }}
           {{ item.author.url }}
         </ion-card-content>
@@ -100,11 +100,11 @@
     <!-- ALL OTHER CATEOGRY -->
 
     <div>
-      <ion-card *ngFor="let item of (tipsItems | async)?.slice().reverse()" (click)="openItem(item)">
+      <ion-card *ngFor="let item of (tipsItems | async)?.slice().reverse()" >
         <div *ngIf="item.category == this.category">
           <ion-item>
-            <h3 item-right>{{ item.author.username }}</h3>
-            <ion-avatar item-right>
+            <h3 item-right (click)="openUser(item)">{{ item.author.username }}</h3>
+            <ion-avatar item-right (click)="openUser(item)">
               <div *ngIf="item.author.url == 0;else avatar">
                   <img src="../../assets/imgs/logo.png">
               </div>
@@ -112,8 +112,8 @@
                   <img  src="{{ item.author.url }}" />
               </ng-template>
             </ion-avatar>
-            <h1>{{ item.title }}</h1>
-            <div id="datexlieu">
+            <h1 (click)="openItem(item)">{{ item.title }}</h1>
+            <div id="datexlieu" (click)="openItem(item)">
               <div class="inline">
                 <h4 class="datelieu date">{{ item.add_date | date:'MMM d, y, h:mm' }}</h4>
               </div>
@@ -126,7 +126,7 @@
             </div>
           </ion-item>
 
-          <ion-card-content>
+          <ion-card-content (click)="openItem(item)">
             {{ item.text }}
             {{ item.author.url }}
           </ion-card-content>

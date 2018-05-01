@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 import { Items } from '../../providers/providers';
+import { Item } from '../../models/item';
 
 @IonicPage()
 @Component({
@@ -13,6 +14,12 @@ export class ItemDetailPage {
 
   constructor(public navCtrl: NavController, navParams: NavParams, items: Items) {
     this.item = navParams.get('item');
+  }
+
+  openUser(item: Item){
+    this.navCtrl.push('UserPage', {
+      user: item.author
+    });
   }
 
 }

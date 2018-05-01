@@ -1,10 +1,8 @@
-<ion-header>
-
-  <ion-navbar>
-    <ion-title class="center">Astuce</ion-title>
-  </ion-navbar>
-
-</ion-header>
+<ion-header no-border>
+    <ion-navbar color="secondary">
+      <ion-title>Foreign'Five</ion-title>
+    </ion-navbar>
+  </ion-header>
 
 
 <ion-content>
@@ -12,8 +10,8 @@
   <ion-card>
   <ion-card-header>
   <ion-item>
-    <h3 item-right>{{ item.author.username }}</h3>
-    <ion-avatar item-right>
+    <h3 item-right (click)="openUser(item)">{{ item.author.username }}</h3>
+    <ion-avatar item-right (click)="openUser(item)">
         <div *ngIf="item.author.url == 0;else avatar">
             <img src="../../assets/imgs/logo.png">
         </div>

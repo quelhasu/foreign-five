@@ -112,6 +112,12 @@ export class ListMasterPage {
     });
   }
 
+  openUser(item: Item){
+    this.navCtrl.push('UserPage', {
+      user: item.author
+    });
+  }
+
 
   getDate(item) {
     return Date.now();

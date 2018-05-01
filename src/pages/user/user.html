@@ -1,0 +1,161 @@
+<ion-header no-border>
+  <ion-navbar color="secondary">
+    <ion-buttons end ion-button>Contact</ion-buttons>
+    <!-- <ion-title>{{(profileData | async)?.username}}</ion-title> -->
+    <ion-title>Profile</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content fullscreen>
+
+  <div class="splash-bg">
+    <div id="lieu">
+      <ion-avatar class="user-avatar">
+        <div *ngIf="user.url == 0;else avatar">
+          <img src="../../assets/imgs/logo.png">
+        </div>
+        <ng-template #avatar>
+          <img src="{{ user.url }}" />
+        </ng-template>
+      </ion-avatar>
+    </div>
+  </div>
+  <ion-item class="nom-note">
+    <h1 item-left>{{ user.username }}</h1>
+    <div item-right *ngFor="let item of [0,1,2,3]; let i = index" class="inline fas fa-star">
+    </div>
+  </ion-item>
+
+  <h1></h1>
+
+  <ion-segment [(ngModel)]="category">
+    <ion-segment-button value="all">
+      All
+    </ion-segment-button>
+    <ion-segment-button value="Housing">
+      Housing
+    </ion-segment-button>
+    <ion-segment-button value="Social">
+      Social
+    </ion-segment-button>
+    <ion-segment-button value="Economics">
+      Economics
+    </ion-segment-button>
+    <ion-segment-button value="Other">
+      Other
+    </ion-segment-button>
+  </ion-segment>
+
+  <div [ngSwitch]="category">
+
+    <!-- CATEGORY ALL -->
+
+    <div *ngSwitchCase="'all'" ngSelected="selected">
+      <ion-card *ngFor="let item of (tipsItems | async)?.slice().reverse(); let i = index">
+        <div *ngIf="item.author.username == user.username">
+          <!-- .reverse() -->
+
+          <ion-item>
+            <h3 item-right>{{ user.username }}</h3>
+            <ion-avatar item-right>
+              <div *ngIf="user.url == 0;else avatar">
+                <img src="../../assets/imgs/logo.png">
+              </div>
+              <ng-template #avatar>
+                <img src="{{ user.url }}" />
+              </ng-template>
+            </ion-avatar>
+            <h1 (click)="openItem(item)">{{ item.title }}</h1>
+            <div id="datexlieu" (click)="openItem(item)">
+              <div class="inline">
+                <h4 class="datelieu date">{{ item.add_date | date:'MMM d, y, h:mm' }}</h4>
+              </div>
+              <div class="inline">
+                <i class="fas fa-map-marker"></i>
+              </div>
+              <div class="inline">
+                <h4 class="datelieu">Paris, France</h4>
+              </div>
+            </div>
+          </ion-item>
+
+          <ion-card-content (click)="openItem(item)">
+            {{ item.text }} {{ user.url }}
+          </ion-card-content>
+
+          <ion-row>
+            <ion-col>
+              <button ion-button icon-left clear small>
+                <ion-icon name="thumbs-up"></ion-icon>
+                <div>{{ item.likes }} Likes</div>
+              </button>
+            </ion-col>
+            <ion-col>
+              <button ion-button icon-left clear small>
+                <ion-icon name="text"></ion-icon>
+                <div>{{ item.comments }} Comments</div>
+              </button>
+            </ion-col>
+          </ion-row>
+        </div>
+      </ion-card>
+    </div>
+
+    <!-- ALL OTHER CATEOGRY -->
+
+    <div>
+      <ion-card *ngFor="let item of (tipsItems | async)?.slice().reverse(); let i = index">
+        <div *ngIf="item.author.username == user.username">
+          <div *ngIf="item.category == this.category">
+            <ion-item>
+              <h3 item-right>{{ user.username }}</h3>
+              <ion-avatar item-right>
+                <div *ngIf="user.url == 0;else avatar">
+                  <img src="../../assets/imgs/logo.png">
+                </div>
+                <ng-template #avatar>
+                  <img src="{{ user.url }}" />
+                </ng-template>
+              </ion-avatar>
+              <h1 (click)="openItem(item)">{{ item.title }}</h1>
+              <div id="datexlieu" (click)="openItem(item)">
+                <div class="inline">
+                  <h4 class="datelieu date">{{ item.add_date | date:'MMM d, y, h:mm' }}</h4>
+                </div>
+                <div class="inline">
+                  <i class="fas fa-map-marker"></i>
+                </div>
+                <div class="inline">
+                  <h4 class="datelieu">Paris, France</h4>
+                </div>
+              </div>
+            </ion-item>
+
+            <ion-card-content (click)="openItem(item)">
+              {{ item.text }}
+              {{ user.url }}
+            </ion-card-content>
+
+            <ion-row>
+              <ion-col>
+                <button ion-button icon-left clear small>
+                  <ion-icon name="thumbs-up"></ion-icon>
+                  <div>{{ item.likes }} Likes</div>
+                </button>
+              </ion-col>
+              <ion-col>
+                <button ion-button icon-left clear small>
+                  <ion-icon name="text"></ion-icon>
+                  <div>{{ item.comments }} Comments</div>
+                </button>
+              </ion-col>
+            </ion-row>
+          </div>
+        </div>
+      </ion-card>
+    </div>
+
+
+  </div>
+
+</ion-content>
