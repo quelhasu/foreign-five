@@ -14,14 +14,16 @@
 
   "WELCOME_INTRO":"Tout voyageur mérite sa plus belle expérience!",
 
-  "TUTORIAL_SLIDE1_TITLE": "Bienvenue dans le kit de démarrage Ionic Super Starter",
-  "TUTORIAL_SLIDE1_DESCRIPTION": "<b>Ionic Super Starter</b> est un kit complet pour démarrer sur Ionic. Il repose sur les meilleures pratiques et implémente de nombreux types de pages.",
+  "TUTORIAL_SLIDE1_TITLE": "Bienvenue sur l'application Foreign'Five",
+  "TUTORIAL_SLIDE1_DESCRIPTION": "Découvrez Foreign'Five et sa nouvelle façon de vous faire partir à l'étranger en tant qu'étudiant.",
 
-  "TUTORIAL_SLIDE2_TITLE": "Comment utiliser le Super Starter",
-  "TUTORIAL_SLIDE2_DESCRIPTION": "Assemblez les types de pages désirés et supprimez les autres. Le kit inclut plusieurs mises en page courantes d’applications mobiles, comme les pages de connexion et d’inscription, les onglets et cette page de tutoriel.",
+  "TUTORIAL_SLIDE2_TITLE": "Comment utiliser l'application",
+  "TUTORIAL_SLIDE2_DESCRIPTION": "Vous allez y découvrir des astuces et bons plans inédits partagez par d'autres étudiants afin de mieux appréhender votre prochain départ à l'étranger.<br>Vous pourrez alors partager votre experience à votre tour et faire la rencontre avec d'autres étudiants.<br>Foreign'Five est la plus grande application d'entraide entre étudiants.",
 
   "TUTORIAL_SLIDE3_TITLE": "Pour commencer",
-  "TUTORIAL_SLIDE3_DESCRIPTION": "Si vous avez besoin d’aide, consultez le README du Super Starter pour un tutoriel complet.",
+  "TUTORIAL_SLIDE3_DESCRIPTION": "Si vous avez besoin d’aide, n'hesiter à nous contacter.<br><b>foreign-five@gmail.com</b>.",
+  "TUTORIAL_SLIDE4_TITLE": "Prêt à voyager ?",
+
 
   "SETTINGS_TITLE": "Paramètres",
   "SETTINGS_OPTION1": "Option 1",
